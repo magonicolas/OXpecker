@@ -67,6 +67,9 @@ public  class Controller : MonoBehaviour
 	public Transform equiposContent;
 	public GameObject sucursalPrefab;
 	public Transform sucursalContent;
+	public GameObject togglePrefab;
+	public Transform toggleContent;
+	public ScrollRect scrollRectToggle;
 	public GameObject textSinInternet;
 	public Text textSinInternetText;
 	public Image reloadImage;
@@ -128,6 +131,7 @@ public  class Controller : MonoBehaviour
 		homePanel.SetActive(false);
 		productoPanel.SetActive(true);
 		sucursalText.text = sucursalSelected;
+		InstantiateProductos ();
 		UpdateEquipos();
 	}
 
@@ -141,22 +145,17 @@ public  class Controller : MonoBehaviour
 		for(int i = 0; i < clientes.Count; i++)
 		{
 			if (clientes [idClienteSelected].sucursales [i].sucursal == sucursalSelected) {
-				print ("Sucuresal Elegida");
 				idSucursalSelected = i;
 			}
 
-			print ("ID Scursal Selected: " + idSucursalSelected + "  Sucursal Selected: " + sucursalSelected);
 		//	if(sucursal[i].sucursal == sucursalSelected)
 		//		idSucursalSelected = i;
 		}
 		//for(int j = 0; j < sucursal[idSucursalSelected].producto.Length; j++)
-		print("Productos Lenght: " + clientes [idClienteSelected].sucursales[idSucursalSelected].producto.Length);
 		for(int j = 0; j < clientes [idClienteSelected].sucursales[idSucursalSelected].producto.Length; j++)
 		{
-			print ("Producto: " + clientes [idClienteSelected].sucursales[idSucursalSelected].producto[j].producto.ToLower() + " Selected " + productoSelected.ToLower());
 			if(clientes [idClienteSelected].sucursales[idSucursalSelected].producto[j].producto.ToLower() == productoSelected.ToLower())
 			{
-				print ("Entro Acá");
 				idProductoSelected = j;
 				temp = true;
 			}
@@ -263,6 +262,27 @@ public  class Controller : MonoBehaviour
 		if(totalEquiposTotal != 0)
 			porcentajeTotalText.text = (Mathf.Floor((onlineTotal / totalEquiposTotal)*100)).ToString() + "%";
 		
+	}
+
+	public void InstantiateProductos ()
+	{
+		// clientes [idClienteSelected].sucursales[idSucursalSelected].producto[j].producto
+
+		int index = 0;
+		foreach (Producto p in clientes [idClienteSelected].sucursales[idSucursalSelected].producto) {
+		
+			GameObject temp = Instantiate (togglePrefab) as GameObject;
+			temp.transform.SetParent (toggleContent, false);
+			temp.name = clientes [idClienteSelected].sucursales [idSucursalSelected].producto [index].producto.ToString ();
+			temp.GetComponent<ToggleScript>().controller = this.gameObject.GetComponent<Controller>();
+			temp.GetComponent<ToggleScript> ().name = temp.name;
+			temp.GetComponent<ToggleScript> ().myLabel.text = temp.name;
+
+			index++;
+		}
+		scrollRectToggle.GetComponent<ScrollRect>().enabled = false;
+		scrollRectToggle.GetComponent<ScrollRect>().enabled = true;
+		Canvas.ForceUpdateCanvases ();
 	}
 
 	public void SetProducto (string prod)
