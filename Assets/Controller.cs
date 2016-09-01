@@ -134,51 +134,35 @@ public  class Controller : MonoBehaviour
 	[ContextMenu ("Update Equipos")]
 	public void UpdateEquipos ()
 	{
-		print ("Update Equipos Llamado");
-		/*
-		equiposContent.GetComponent<RectTransform>().localPosition = new Vector2(0,-1585);
-		bool temp = false;
-		if(productoSelected == "")
-			temp = true;
-		for(int i = 0; i < sucursal.Count; i++)
-		{
-			if(sucursal[i].sucursal == sucursalSelected)
-				idSucursalSelected = i;
-		}
-		for(int j = 0; j < sucursal[idSucursalSelected].producto.Length; j++)
-		{
-			if(sucursal[idSucursalSelected].producto[j].producto == productoSelected)
-			{
-				idProductoSelected = j;
-				temp = true;
-			}
-		}
-		DestroyChild();
-		if(sucursal[idSucursalSelected].producto[idProductoSelected].equipos.Length != 0 && temp)
-		{
-			InstantiateEquipos();
-		}
-		*/
-
 		equiposContent.GetComponent<RectTransform>().localPosition = new Vector2(0,-1585);
 		bool temp = false;
 		if(productoSelected == "")
 			temp = true;
 		for(int i = 0; i < clientes.Count; i++)
 		{
-			if(sucursal[i].sucursal == sucursalSelected)
+			if (clientes [idClienteSelected].sucursales [i].sucursal == sucursalSelected) {
+				print ("Sucuresal Elegida");
 				idSucursalSelected = i;
+			}
+
+			print ("ID Scursal Selected: " + idSucursalSelected + "  Sucursal Selected: " + sucursalSelected);
+		//	if(sucursal[i].sucursal == sucursalSelected)
+		//		idSucursalSelected = i;
 		}
-		for(int j = 0; j < sucursal[idSucursalSelected].producto.Length; j++)
+		//for(int j = 0; j < sucursal[idSucursalSelected].producto.Length; j++)
+		print("Productos Lenght: " + clientes [idClienteSelected].sucursales[idSucursalSelected].producto.Length);
+		for(int j = 0; j < clientes [idClienteSelected].sucursales[idSucursalSelected].producto.Length; j++)
 		{
-			if(sucursal[idSucursalSelected].producto[j].producto == productoSelected)
+			print ("Producto: " + clientes [idClienteSelected].sucursales[idSucursalSelected].producto[j].producto.ToLower() + " Selected " + productoSelected.ToLower());
+			if(clientes [idClienteSelected].sucursales[idSucursalSelected].producto[j].producto.ToLower() == productoSelected.ToLower())
 			{
+				print ("Entro Acá");
 				idProductoSelected = j;
 				temp = true;
 			}
 		}
 		DestroyChild();
-		if(sucursal[idSucursalSelected].producto[idProductoSelected].equipos.Length != 0 && temp)
+		if(clientes [idClienteSelected].sucursales[idSucursalSelected].producto[idProductoSelected].equipos.Length != 0 && temp)
 		{
 			InstantiateEquipos();
 		}
@@ -223,18 +207,18 @@ public  class Controller : MonoBehaviour
 	public void InstantiateEquipos ()
 	{
 		int index = 0;
-		foreach(Equipo acc in sucursal[idSucursalSelected].producto[idProductoSelected].equipos)
+		foreach(Equipo acc in clientes [idClienteSelected].sucursales[idSucursalSelected].producto[idProductoSelected].equipos)
 		{
 			GameObject a = Instantiate(equipoPrefab) as GameObject;
-			a.name = sucursal[idSucursalSelected].producto[idProductoSelected].equipos[index].ToString();
+			a.name = clientes [idClienteSelected].sucursales[idSucursalSelected].producto[idProductoSelected].equipos[index].ToString();
 			EquipoScript temp = a.GetComponent<EquipoScript>();
-			temp.online = sucursal[idSucursalSelected].producto[idProductoSelected].equipos[index].online;
-			temp.id = sucursal[idSucursalSelected].producto[idProductoSelected].equipos[index].uniqueID;
-			temp.ultimaConexion = sucursal[idSucursalSelected].producto[idProductoSelected].equipos[index].ultimaConexion;
-			temp.hora = sucursal[idSucursalSelected].producto[idProductoSelected].equipos[index].hora;
-			temp.idPunto = sucursal[idSucursalSelected].producto[idProductoSelected].equipos[index].idPunto;
-			temp.version = sucursal[idSucursalSelected].producto[idProductoSelected].equipos[index].version;
-			temp.mac = sucursal[idSucursalSelected].producto[idProductoSelected].equipos[index].MAC;
+			temp.online = clientes [idClienteSelected].sucursales[idSucursalSelected].producto[idProductoSelected].equipos[index].online;
+			temp.id = clientes [idClienteSelected].sucursales[idSucursalSelected].producto[idProductoSelected].equipos[index].uniqueID;
+			temp.ultimaConexion = clientes [idClienteSelected].sucursales[idSucursalSelected].producto[idProductoSelected].equipos[index].ultimaConexion;
+			temp.hora = clientes [idClienteSelected].sucursales[idSucursalSelected].producto[idProductoSelected].equipos[index].hora;
+			temp.idPunto = clientes [idClienteSelected].sucursales[idSucursalSelected].producto[idProductoSelected].equipos[index].idPunto;
+			temp.version = clientes [idClienteSelected].sucursales[idSucursalSelected].producto[idProductoSelected].equipos[index].version;
+			temp.mac = clientes [idClienteSelected].sucursales[idSucursalSelected].producto[idProductoSelected].equipos[index].MAC;
 			temp.SetEquipos();
 			a.transform.SetParent(equiposContent.transform, false);
 			index++;
