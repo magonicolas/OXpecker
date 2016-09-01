@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{C2EC7785-C58F-AD3F-F288-0BE60911C9F6}") = "SoporteEntel07", "Assembly-CSharp.csproj", "{07751594-EF84-611F-AC12-9414E468175A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07751594-EF84-611F-AC12-9414E468175A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07751594-EF84-611F-AC12-9414E468175A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07751594-EF84-611F-AC12-9414E468175A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07751594-EF84-611F-AC12-9414E468175A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
