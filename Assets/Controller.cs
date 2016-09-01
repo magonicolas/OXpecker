@@ -194,6 +194,16 @@ public  class Controller : MonoBehaviour
 			UpdatePing();
 	}
 
+	public void DestroyChildProducto ()
+	{
+		foreach(Transform child in toggleContent) 
+		{
+			Destroy(child.gameObject);
+		}
+		if(ping)
+			UpdatePing();
+	}
+
 	public void DestroySucursal ()
 	{
 		foreach(Transform child in sucursalContent) 
