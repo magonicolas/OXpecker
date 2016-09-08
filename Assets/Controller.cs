@@ -51,6 +51,7 @@ public  class Cliente
 
 public  class Controller : MonoBehaviour 
 {
+	public Text seleccioneClienteSucursalText;
 	public List <Cliente> clientes = new List<Cliente> ();
 	public  List<Sucursal> sucursal = new List<Sucursal>();
 	public GameObject homePanel;
@@ -65,6 +66,7 @@ public  class Controller : MonoBehaviour
 	public GameObject equipoPrefab;
 	public GameObject pingPrefab;
 	public Transform equiposContent;
+	public GameObject clientePrefab;
 	public GameObject sucursalPrefab;
 	public Transform sucursalContent;
 	public GameObject togglePrefab;
@@ -108,11 +110,10 @@ public  class Controller : MonoBehaviour
 		{
 			DestroySucursal();
 			textSinInternetText.text = "Actualizado Exitosamente";
-			print (www.text);
 			textSinInternet.gameObject.SetActive(true);
-			//sucursal = JsonConvert.DeserializeObject<List<Sucursal>>(www.text);
 			clientes = JsonConvert.DeserializeObject<List<Cliente>>(www.text);
-			InstantiateSucursales();
+			InstantiateClientes ();
+			//InstantiateSucursales();
 			UpdateEquipos();
 		}
 		else
@@ -131,6 +132,13 @@ public  class Controller : MonoBehaviour
 		homePanel.SetActive(false);
 		productoPanel.SetActive(true);
 		sucursalText.text = sucursalSelected;
+		for(int i = 0; i < clientes.Count; i++)
+		{
+			if (clientes [idClienteSelected].sucursales [i].sucursal == sucursalSelected) {
+				idSucursalSelected = i;
+			}
+		}
+
 		InstantiateProductos ();
 		UpdateEquipos();
 	}
@@ -148,8 +156,6 @@ public  class Controller : MonoBehaviour
 				idSucursalSelected = i;
 			}
 
-		//	if(sucursal[i].sucursal == sucursalSelected)
-		//		idSucursalSelected = i;
 		}
 		//for(int j = 0; j < sucursal[idSucursalSelected].producto.Length; j++)
 		for(int j = 0; j < clientes [idClienteSelected].sucursales[idSucursalSelected].producto.Length; j++)
@@ -236,6 +242,15 @@ public  class Controller : MonoBehaviour
 
 	public void InstantiateSucursales ()
 	{
+
+		for(int i = 0; i < clientes.Count; i++)
+		{
+			if (clientes [i].cliente == clienteSelected) {
+				idClienteSelected = i;
+			}
+		}
+
+		DestroySucursal ();
 		int index = 0;
 		//foreach(Sucursal s in sucursal)
 		foreach(Sucursal s in clientes[idClienteSelected].sucursales)
@@ -274,10 +289,51 @@ public  class Controller : MonoBehaviour
 		
 	}
 
+	public void InstantiateClientes ()
+	{
+		int index = 0;
+		//foreach(Sucursal s in sucursal)
+		foreach(Cliente s in clientes)
+		{
+			GameObject temp = Instantiate(clientePrefab) as GameObject;
+			temp.name = clientes[index].cliente.ToString();
+			temp.GetComponent<clienteButtonScript>().controller = this.gameObject.GetComponent<Controller>();
+			temp.GetComponent<clienteButtonScript>().ChangeText();
+			temp.transform.SetParent(sucursalContent.transform, false);
+			int index2 = 0;
+			online = 0;
+			totalEquipos = 0;
+			/*
+			foreach(Producto prod in clientes[idClienteSelected].sucursales[index].producto)
+			{
+				foreach(Equipo equi in clientes[idClienteSelected].sucursales[index].producto[index2].equipos)
+				{
+					if(equi.online)
+					{
+						online++;
+						onlineTotal++;
+					}
+					totalEquipos++;
+					totalEquiposTotal++;
+				}
+				index2++;
+			}
+			if(totalEquipos != 0)
+				temp.GetComponent<sucursalButtonScript>().porcentaje.text = (Mathf.Floor((online / totalEquipos)*100)).ToString() + "%";
+			else
+				temp.GetComponent<sucursalButtonScript>().porcentaje.text = "N/A";
+				*/
+			index++;
+		}
+		/*
+		if(totalEquiposTotal != 0)
+			porcentajeTotalText.text = (Mathf.Floor((onlineTotal / totalEquiposTotal)*100)).ToString() + "%";
+			*/
+
+	}
+
 	public void InstantiateProductos ()
 	{
-		// clientes [idClienteSelected].sucursales[idSucursalSelected].producto[j].producto
-
 		int index = 0;
 		foreach (Producto p in clientes [idClienteSelected].sucursales[idSucursalSelected].producto) {
 		
@@ -287,7 +343,6 @@ public  class Controller : MonoBehaviour
 			temp.GetComponent<ToggleScript>().controller = this.gameObject.GetComponent<Controller>();
 			temp.GetComponent<ToggleScript> ().name = temp.name;
 			temp.GetComponent<ToggleScript> ().myLabel.text = temp.name;
-
 			index++;
 		}
 		scrollRectToggle.GetComponent<ScrollRect>().enabled = false;

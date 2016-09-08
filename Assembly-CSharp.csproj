@@ -379,6 +379,7 @@
      <Compile Include="Assets\JsonDotNet\Source\WinRT\Utilities\RT_ValidationUtils.cs" />
      <Compile Include="Assets\PingScript.cs" />
      <Compile Include="Assets\ToggleScript.cs" />
+     <Compile Include="Assets\clienteButtonScript.cs" />
      <Compile Include="Assets\sucursalButtonScript.cs" />
      <None Include="Assets\JsonDotNet\ReadMe.txt" />
  <Reference Include="UnityEngine.Networking">
