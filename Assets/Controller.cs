@@ -80,11 +80,13 @@ public  class Controller : MonoBehaviour
 	float totalEquipos;
 	float onlineTotal;
 	float totalEquiposTotal;
-	public Text porcentajeTotalText;
+	//public Text porcentajeTotalText;
+	public GameObject mainbackButton;
 
 	void Start ()
 	{
 		UpdateInfo();
+		mainbackButton.SetActive (false);
 	}
 
 
@@ -132,12 +134,13 @@ public  class Controller : MonoBehaviour
 		homePanel.SetActive(false);
 		productoPanel.SetActive(true);
 		sucursalText.text = sucursalSelected;
-		for(int i = 0; i < clientes.Count; i++)
+		for(int i = 0; i < clientes[idClienteSelected].sucursales.Length; i++)
 		{
-			if (clientes [idClienteSelected].sucursales [i].sucursal == sucursalSelected) {
+			if (clientes [idClienteSelected].sucursales [i].sucursal.ToLower() == sucursalSelected.ToLower()) {
 				idSucursalSelected = i;
 			}
 		}
+		productoSelected = clientes [idClienteSelected].sucursales [idSucursalSelected].producto [0].producto;
 
 		InstantiateProductos ();
 		UpdateEquipos();
@@ -242,11 +245,20 @@ public  class Controller : MonoBehaviour
 
 	public void InstantiateSucursales ()
 	{
-
+		mainbackButton.SetActive (true);
 		for(int i = 0; i < clientes.Count; i++)
 		{
 			if (clientes [i].cliente == clienteSelected) {
 				idClienteSelected = i;
+			}
+		}
+
+		for(int i = 0; i < clientes.Count; i++)
+		{
+			if (clientes [idClienteSelected].sucursales [i].sucursal.ToLower() == sucursalSelected.ToLower
+				()) {
+				idSucursalSelected = i;
+				print (idSucursalSelected);
 			}
 		}
 
@@ -284,9 +296,25 @@ public  class Controller : MonoBehaviour
 				temp.GetComponent<sucursalButtonScript>().porcentaje.text = "N/A";
 			index++;
 		}
-		if(totalEquiposTotal != 0)
-			porcentajeTotalText.text = (Mathf.Floor((onlineTotal / totalEquiposTotal)*100)).ToString() + "%";
+
+
+
+	//	if(totalEquiposTotal != 0)
+	//		porcentajeTotalText.text = (Mathf.Floor((onlineTotal / totalEquiposTotal)*100)).ToString() + "%";
 		
+	}
+
+
+
+	public void BackToClientes ()
+	{
+		mainbackButton.SetActive (false);
+		DestroySucursal ();
+		idClienteSelected = 0;
+		idSucursalSelected = 0;
+		productoSelected = "";
+		clienteSelected = "";
+		InstantiateClientes ();
 	}
 
 	public void InstantiateClientes ()
@@ -303,10 +331,11 @@ public  class Controller : MonoBehaviour
 			int index2 = 0;
 			online = 0;
 			totalEquipos = 0;
-			/*
-			foreach(Producto prod in clientes[idClienteSelected].sucursales[index].producto)
+
+
+			foreach(Producto prod in clientes[index].sucursales[index].producto)
 			{
-				foreach(Equipo equi in clientes[idClienteSelected].sucursales[index].producto[index2].equipos)
+				foreach(Equipo equi in clientes[index].sucursales[index].producto[index2].equipos)
 				{
 					if(equi.online)
 					{
@@ -318,17 +347,17 @@ public  class Controller : MonoBehaviour
 				}
 				index2++;
 			}
-			if(totalEquipos != 0)
-				temp.GetComponent<sucursalButtonScript>().porcentaje.text = (Mathf.Floor((online / totalEquipos)*100)).ToString() + "%";
+			if(totalEquiposTotal != 0)
+				temp.GetComponent<clienteButtonScript>().porcentaje.text = (Mathf.Floor((onlineTotal / totalEquiposTotal)*100)).ToString() + "%";
 			else
-				temp.GetComponent<sucursalButtonScript>().porcentaje.text = "N/A";
-				*/
+				temp.GetComponent<clienteButtonScript>().porcentaje.text = "N/A";
+
 			index++;
+
 		}
-		/*
-		if(totalEquiposTotal != 0)
-			porcentajeTotalText.text = (Mathf.Floor((onlineTotal / totalEquiposTotal)*100)).ToString() + "%";
-			*/
+
+
+
 
 	}
 
