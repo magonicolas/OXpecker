@@ -372,6 +372,9 @@ public  class Controller : MonoBehaviour
 			temp.GetComponent<ToggleScript>().controller = this.gameObject.GetComponent<Controller>();
 			temp.GetComponent<ToggleScript> ().name = temp.name;
 			temp.GetComponent<ToggleScript> ().myLabel.text = temp.name;
+			if (index == 0) {
+				temp.GetComponent<Toggle> ().isOn = true;
+			}
 			index++;
 		}
 		scrollRectToggle.GetComponent<ScrollRect>().enabled = false;
