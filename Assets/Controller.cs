@@ -51,6 +51,13 @@ public  class Cliente
 
 public  class Controller : MonoBehaviour 
 {
+	public GameObject sucursalContainer;
+	public GameObject sucursalShowSeleccionaText;
+	public float conectividaGeneral;
+	public Image conectividadGeneralCircle;
+	public int equiposRegistrados;
+	public Text textConectividaGeneral;
+	public Text textEquiposRegistrados;
 	public Text seleccioneClienteSucursalText;
 	public List <Cliente> clientes = new List<Cliente> ();
 	public  List<Sucursal> sucursal = new List<Sucursal>();
@@ -64,11 +71,13 @@ public  class Controller : MonoBehaviour
 	public int idProductoSelected;
 	public int idClienteSelected;
 	public GameObject equipoPrefab;
+	public GameObject equipoBlancoPrefab;
 	public GameObject pingPrefab;
 	public Transform equiposContent;
 	public GameObject clientePrefab;
 	public GameObject sucursalPrefab;
 	public Transform sucursalContent;
+	public Transform clienteContent;
 	public GameObject togglePrefab;
 	public Transform toggleContent;
 	public ScrollRect scrollRectToggle;
@@ -78,6 +87,7 @@ public  class Controller : MonoBehaviour
 	public bool ping;
 	float online;
 	float totalEquipos;
+	float onlineTotalPorSucursal;
 	float onlineTotal;
 	float totalEquiposTotal;
 	//public Text porcentajeTotalText;
@@ -222,12 +232,26 @@ public  class Controller : MonoBehaviour
 
 	}
 
+	public void DestroyCliente ()
+	{
+		foreach(Transform child in clienteContent) 
+		{
+			Destroy(child.gameObject);
+		}
+
+	}
+
 	public void InstantiateEquipos ()
 	{
 		int index = 0;
 		foreach(Equipo acc in clientes [idClienteSelected].sucursales[idSucursalSelected].producto[idProductoSelected].equipos)
 		{
-			GameObject a = Instantiate(equipoPrefab) as GameObject;
+			GameObject a = null;
+			if (index % 2 == 0) {
+				a = Instantiate (equipoPrefab) as GameObject;
+			} else {
+				a = Instantiate (equipoBlancoPrefab) as GameObject;
+			}
 			a.name = clientes [idClienteSelected].sucursales[idSucursalSelected].producto[idProductoSelected].equipos[index].ToString();
 			EquipoScript temp = a.GetComponent<EquipoScript>();
 			temp.online = clientes [idClienteSelected].sucursales[idSucursalSelected].producto[idProductoSelected].equipos[index].online;
@@ -246,6 +270,8 @@ public  class Controller : MonoBehaviour
 	public void InstantiateSucursales ()
 	{
 		mainbackButton.SetActive (true);
+		sucursalContainer.SetActive (true);
+		sucursalShowSeleccionaText.SetActive (true);
 		for(int i = 0; i < clientes.Count; i++)
 		{
 			if (clientes [i].cliente == clienteSelected) {
@@ -283,10 +309,12 @@ public  class Controller : MonoBehaviour
 					if(equi.online)
 					{
 						online++;
-						onlineTotal++;
+						onlineTotalPorSucursal++;
+						//onlineTotal++;
 					}
 					totalEquipos++;
 					totalEquiposTotal++;
+					//equiposRegistrados++;
 				}
 				index2++;
 			}
@@ -308,8 +336,12 @@ public  class Controller : MonoBehaviour
 
 	public void BackToClientes ()
 	{
+		sucursalContainer.SetActive (false);
+		sucursalShowSeleccionaText.SetActive (false);
+		equiposRegistrados = 0;
 		mainbackButton.SetActive (false);
 		DestroySucursal ();
+		DestroyChild ();
 		idClienteSelected = 0;
 		idSucursalSelected = 0;
 		productoSelected = "";
@@ -319,43 +351,65 @@ public  class Controller : MonoBehaviour
 
 	public void InstantiateClientes ()
 	{
+		int ind = 0;
+		int index2 = 0;
 		int index = 0;
+
 		//foreach(Sucursal s in sucursal)
 		foreach(Cliente s in clientes)
 		{
 			GameObject temp = Instantiate(clientePrefab) as GameObject;
-			temp.name = clientes[index].cliente.ToString();
+			temp.name = clientes[ind].cliente.ToString();
 			temp.GetComponent<clienteButtonScript>().controller = this.gameObject.GetComponent<Controller>();
 			temp.GetComponent<clienteButtonScript>().ChangeText();
-			temp.transform.SetParent(sucursalContent.transform, false);
-			int index2 = 0;
+			temp.transform.SetParent(clienteContent.transform, false);
+
 			online = 0;
 			totalEquipos = 0;
 
+			index = 0;
 
-			foreach(Producto prod in clientes[index].sucursales[index].producto)
-			{
-				foreach(Equipo equi in clientes[index].sucursales[index].producto[index2].equipos)
+
+			foreach (Sucursal suc in clientes[ind].sucursales) {
+				index2 = 0;
+				foreach(Producto prod in clientes[ind].sucursales[index].producto)
 				{
-					if(equi.online)
+
+					foreach(Equipo equi in clientes[ind].sucursales[index].producto[index2].equipos)
 					{
-						online++;
-						onlineTotal++;
+
+						if(equi.online)
+						{
+							online++;
+							onlineTotalPorSucursal++;
+							onlineTotal++;
+						}
+						totalEquipos++;
+						totalEquiposTotal++;
+						equiposRegistrados++;
+
+						conectividaGeneral = (Mathf.Floor ((onlineTotal / equiposRegistrados) * 100));
+						textConectividaGeneral.text = (conectividaGeneral.ToString() + "%");
 					}
-					totalEquipos++;
-					totalEquiposTotal++;
+					index2++;
+
 				}
-				index2++;
+				index++;
 			}
+
 			if(totalEquiposTotal != 0)
-				temp.GetComponent<clienteButtonScript>().porcentaje.text = (Mathf.Floor((onlineTotal / totalEquiposTotal)*100)).ToString() + "%";
+				temp.GetComponent<clienteButtonScript>().porcentaje.text = (Mathf.Floor((onlineTotalPorSucursal / totalEquiposTotal)*100)).ToString() + "%";
 			else
 				temp.GetComponent<clienteButtonScript>().porcentaje.text = "N/A";
 
-			index++;
+
+			ind++;
 
 		}
-
+		conectividaGeneral = (Mathf.Floor ((onlineTotal / equiposRegistrados) * 100));
+		textConectividaGeneral.text = (conectividaGeneral.ToString() + "%");
+		conectividadGeneralCircle.fillAmount = conectividaGeneral / 100;
+		textEquiposRegistrados.text = equiposRegistrados.ToString ();;
 
 
 
