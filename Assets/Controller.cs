@@ -122,11 +122,10 @@ public  class Controller : MonoBehaviour
 		if (string.IsNullOrEmpty(www.error))
 		{
 			DestroyCliente ();
-			DestroySucursal();
+			//DestroySucursal();
 			textSinInternetText.text = "Actualizado Exitosamente";
 			textSinInternet.gameObject.SetActive(true);
 			clientes = JsonConvert.DeserializeObject<List<Cliente>>(www.text);
-			print (www.text);
 			InstantiateClientes ();
 			//InstantiateSucursales();
 			UpdateEquipos();
@@ -195,12 +194,12 @@ public  class Controller : MonoBehaviour
 	{
 		int index = 0;
 		equiposContent.GetComponent<RectTransform>().localPosition = new Vector2(0,-1585);
-		foreach(Ping pin in sucursal[idSucursalSelected].ping)
+		foreach(Ping pin in clientes [idClienteSelected].sucursales[idSucursalSelected].ping)
 		{
 			GameObject a = Instantiate(pingPrefab) as GameObject;
 			PingScript temp = a.GetComponent<PingScript>();
-			temp.nombreText.text = sucursal[idSucursalSelected].ping[index].nombre;
-			temp.fechaText.text = sucursal[idSucursalSelected].ping[index].fecha;
+			temp.nombreText.text = clientes [idClienteSelected].sucursales[idSucursalSelected].ping[index].nombre;
+			temp.fechaText.text = clientes [idClienteSelected].sucursales[idSucursalSelected].ping[index].fecha;
 			a.transform.SetParent(equiposContent.transform, false);
 			index++;
 		}
@@ -375,6 +374,8 @@ public  class Controller : MonoBehaviour
 			temp.name = clientes[ind].cliente.ToString();
 			temp.GetComponent<clienteButtonScript>().controller = this.gameObject.GetComponent<Controller>();
 			temp.GetComponent<clienteButtonScript>().ChangeText();
+			temp.GetComponent<clienteButtonScript> ().logoString = clientes [ind].imagen;
+			temp.GetComponent<clienteButtonScript> ().LoadImage ();
 			temp.transform.SetParent(clienteContent.transform, false);
 
 			online = 0;
@@ -450,6 +451,14 @@ public  class Controller : MonoBehaviour
 			}
 			index++;
 		}
+		if (clientes [idClienteSelected].sucursales [idSucursalSelected].ping.Length >= 1) {
+			GameObject temp = Instantiate (togglePrefab) as GameObject;
+			temp.transform.SetParent (toggleContent, false);
+			temp.name = "PING";
+			temp.GetComponent<ToggleScript>().controller = this.gameObject.GetComponent<Controller>();
+			temp.GetComponent<ToggleScript> ().name = temp.name;
+			temp.GetComponent<ToggleScript> ().myLabel.text = temp.name;
+		}
 		scrollRectToggle.GetComponent<ScrollRect>().enabled = false;
 		scrollRectToggle.GetComponent<ScrollRect>().enabled = true;
 		Canvas.ForceUpdateCanvases ();
@@ -460,7 +469,7 @@ public  class Controller : MonoBehaviour
 		ping = false;
 		productoSelected = prod;
 
-		if(productoSelected == "Ping")
+		if(productoSelected == "ping" || productoSelected == "Ping" || productoSelected == "PING")
 		{
 			ping = true;
 			DestroyChild();

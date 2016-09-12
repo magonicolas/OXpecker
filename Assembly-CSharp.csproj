@@ -46,6 +46,15 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Controller.cs" />
+     <Compile Include="Assets\Easy Save 2\ES2Init.cs" />
+     <Compile Include="Assets\Easy Save 2\Examples\Creating an Automatic Save Structure\ES2UniqueID.cs" />
+     <Compile Include="Assets\Easy Save 2\Examples\Creating an Automatic Save Structure\UniqueGameLogic.cs" />
+     <Compile Include="Assets\Easy Save 2\Examples\Creating an Automatic Save Structure\UniqueObjectManager.cs" />
+     <Compile Include="Assets\Easy Save 2\Examples\Creating an Automatic Save Structure\UniqueSaveManager.cs" />
+     <Compile Include="Assets\Easy Save 2\Examples\Save and Load Prefabs Instantiated at Runtime\PrefabManager.cs" />
+     <Compile Include="Assets\Easy Save 2\Examples\Shared Assets\Scripts\MyExampleScript.cs" />
+     <Compile Include="Assets\Easy Save 2\Examples\Upload and Download a Texture\UploadDownloadTexture.cs" />
+     <Compile Include="Assets\Easy Save 2\Types\ES2_AudioClip.cs" />
      <Compile Include="Assets\EquipoScript.cs" />
      <Compile Include="Assets\JsonDotNet\Examples\Serialization\1-BasicSerialization\JNSimpleObjectSample.cs" />
      <Compile Include="Assets\JsonDotNet\Examples\Serialization\2-Polymorphism\JNPolymorphismSample.cs" />
@@ -381,7 +390,10 @@
      <Compile Include="Assets\ToggleScript.cs" />
      <Compile Include="Assets\clienteButtonScript.cs" />
      <Compile Include="Assets\sucursalButtonScript.cs" />
+     <None Include="Assets\Easy Save 2\changelog.txt" />
+     <None Include="Assets\Easy Save 2\readme.txt" />
      <None Include="Assets\JsonDotNet\ReadMe.txt" />
+     <None Include="Assets\link.xml" />
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
@@ -391,6 +403,16 @@
  <Reference Include="SampleClassLibrary">
  <HintPath>/Users/nicolaspalacios/UnityProyects/OXPecker/Assets/JsonDotNet/Examples/Tests/TestModels/SampleClassLibrary.dll</HintPath>
  </Reference>
+ <Reference Include="ES2">
+ <HintPath>/Users/nicolaspalacios/UnityProyects/OXPecker/Assets/Plugins/ES2.dll</HintPath>
+ </Reference>
+ <Reference Include="MoodkieSecurity">
+ <HintPath>/Users/nicolaspalacios/UnityProyects/OXPecker/Assets/Plugins/MoodkieSecurity.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{6E0BE334-2199-8780-9D88-49EF5B7EDBA6}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

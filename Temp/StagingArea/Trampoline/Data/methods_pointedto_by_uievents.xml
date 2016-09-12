@@ -1,0 +1,40 @@
+<linker>
+	<assembly fullname="Assembly-CSharp">
+		<type fullname="ToggleScript">
+			<method name="SetProducto"/>
+			<method name="SetProducto"/>
+		</type>
+		<type fullname="clienteButtonScript">
+			<method name="ButtonPressed"/>
+			<method name="ButtonPressed"/>
+			<method name="ButtonPressed"/>
+		</type>
+		<type fullname="EquipoScript">
+			<method name="toggleShowingBasic"/>
+			<method name="toggleShowingBasic"/>
+			<method name="toggleShowingBasic"/>
+			<method name="toggleShowingBasic"/>
+		</type>
+		<type fullname="sucursalButtonScript">
+			<method name="ButtonPressed"/>
+			<method name="ButtonPressed"/>
+			<method name="ButtonPressed"/>
+		</type>
+		<type fullname="Controller">
+			<method name="UpdateInfo"/>
+			<method name="DestroyChildProducto"/>
+			<method name="BackToClientes"/>
+			<method name="SetProducto"/>
+			<method name="SetProducto"/>
+			<method name="SetProducto"/>
+			<method name="UpdateInfo"/>
+			<method name="UpdateInfo"/>
+		</type>
+	</assembly>
+	<assembly fullname="UnityEngine">
+		<type fullname="UnityEngine.GameObject">
+			<method name="SetActive"/>
+			<method name="SetActive"/>
+		</type>
+	</assembly>
+</linker>

@@ -21,9 +21,7 @@ public class EquipoScript : MonoBehaviour
 	public string mac;
 	public Text macText;
 
-	public Image logo;
-	public string logoString;
-	public Sprite mySprite;
+
 
 	public GameObject textVersion;
 	public GameObject textId;
@@ -45,7 +43,7 @@ public class EquipoScript : MonoBehaviour
 			textIdPunto.SetActive (false);
 		} else {
 			textVersion.SetActive (false);
-			textId.SetActive (true);
+			textId.SetActive (false);
 			textUltimaConexion.SetActive (false);
 			textHora.SetActive (false);
 			textModelo.SetActive (true);

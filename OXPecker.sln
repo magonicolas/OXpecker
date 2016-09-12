@@ -1,6 +1,8 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
+Project("{FCCA1B4F-EEC4-8D81-4347-A3F64E652EF3}") = "OXPecker", "Assembly-CSharp-firstpass.csproj", "{6E0BE334-2199-8780-9D88-49EF5B7EDBA6}"
+EndProject
 Project("{FCCA1B4F-EEC4-8D81-4347-A3F64E652EF3}") = "OXPecker", "Assembly-CSharp.csproj", "{6C8BED31-D5BF-5EB1-1355-2D5AB505243C}"
 EndProject
 Global
@@ -9,6 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E0BE334-2199-8780-9D88-49EF5B7EDBA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E0BE334-2199-8780-9D88-49EF5B7EDBA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E0BE334-2199-8780-9D88-49EF5B7EDBA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E0BE334-2199-8780-9D88-49EF5B7EDBA6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6C8BED31-D5BF-5EB1-1355-2D5AB505243C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6C8BED31-D5BF-5EB1-1355-2D5AB505243C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C8BED31-D5BF-5EB1-1355-2D5AB505243C}.Release|Any CPU.ActiveCfg = Release|Any CPU
