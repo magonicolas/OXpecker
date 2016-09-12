@@ -21,7 +21,37 @@ public class EquipoScript : MonoBehaviour
 	public string mac;
 	public Text macText;
 
+	public Image logo;
+	public string logoString;
+	public Sprite mySprite;
 
+	public GameObject textVersion;
+	public GameObject textId;
+	public GameObject textUltimaConexion;
+	public GameObject textHora;
+	public GameObject textModelo;
+	public GameObject textIdPunto;
+
+	public bool showingBasic = true;
+
+	public void handleWhatToShow ()
+	{
+		if (showingBasic) {
+			textVersion.SetActive (true);
+			textId.SetActive (true);
+			textUltimaConexion.SetActive (true);
+			textHora.SetActive (true);
+			textModelo.SetActive (false);
+			textIdPunto.SetActive (false);
+		} else {
+			textVersion.SetActive (false);
+			textId.SetActive (true);
+			textUltimaConexion.SetActive (false);
+			textHora.SetActive (false);
+			textModelo.SetActive (true);
+			textIdPunto.SetActive (true);
+		}
+	}
 
 	public void SetEquipos ()
 	{
@@ -36,5 +66,13 @@ public class EquipoScript : MonoBehaviour
 		versionText.text = version;
 		macText.text = mac;
 	}
+
+	public void toggleShowingBasic ()
+	{
+		showingBasic = !showingBasic;
+		handleWhatToShow ();
+	}
+
+
 
 }

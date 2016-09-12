@@ -17,6 +17,6 @@ public class clienteButtonScript : MonoBehaviour {
 
 	public void ChangeText ()
 	{
-		cliente.text = gameObject.name.ToString();
+		//cliente.text = gameObject.name.ToString();
 	}
 }

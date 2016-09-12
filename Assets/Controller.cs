@@ -47,6 +47,7 @@ public  class Cliente
 {
 	public string cliente;
 	public Sucursal[] sucursales;
+	public string imagen;
 }
 
 public  class Controller : MonoBehaviour 
@@ -120,10 +121,12 @@ public  class Controller : MonoBehaviour
 			yield return new WaitForSeconds (0.1f);
 		if (string.IsNullOrEmpty(www.error))
 		{
+			DestroyCliente ();
 			DestroySucursal();
 			textSinInternetText.text = "Actualizado Exitosamente";
 			textSinInternet.gameObject.SetActive(true);
 			clientes = JsonConvert.DeserializeObject<List<Cliente>>(www.text);
+			print (www.text);
 			InstantiateClientes ();
 			//InstantiateSucursales();
 			UpdateEquipos();
@@ -336,6 +339,9 @@ public  class Controller : MonoBehaviour
 
 	public void BackToClientes ()
 	{
+		conectividaGeneral = 0;
+		onlineTotal = 0;
+		equiposRegistrados = 0;
 		sucursalContainer.SetActive (false);
 		sucursalShowSeleccionaText.SetActive (false);
 		equiposRegistrados = 0;
@@ -351,9 +357,16 @@ public  class Controller : MonoBehaviour
 
 	public void InstantiateClientes ()
 	{
+		equiposRegistrados = 0;
+		onlineTotal = 0;
+		conectividaGeneral = 0;
+		DestroyCliente ();
 		int ind = 0;
 		int index2 = 0;
 		int index = 0;
+
+		float tempOnlinePorSucursal = 0;
+		float tempEquiposTotalPorSucursal = 0;
 
 		//foreach(Sucursal s in sucursal)
 		foreach(Cliente s in clientes)
@@ -383,10 +396,13 @@ public  class Controller : MonoBehaviour
 							online++;
 							onlineTotalPorSucursal++;
 							onlineTotal++;
+							tempOnlinePorSucursal++;
+
 						}
 						totalEquipos++;
 						totalEquiposTotal++;
 						equiposRegistrados++;
+						tempEquiposTotalPorSucursal++;
 
 						conectividaGeneral = (Mathf.Floor ((onlineTotal / equiposRegistrados) * 100));
 						textConectividaGeneral.text = (conectividaGeneral.ToString() + "%");
@@ -395,14 +411,17 @@ public  class Controller : MonoBehaviour
 
 				}
 				index++;
+
+
 			}
 
-			if(totalEquiposTotal != 0)
-				temp.GetComponent<clienteButtonScript>().porcentaje.text = (Mathf.Floor((onlineTotalPorSucursal / totalEquiposTotal)*100)).ToString() + "%";
+			if (totalEquiposTotal != 0) {
+				temp.GetComponent<clienteButtonScript> ().porcentaje.text = (Mathf.Floor ((tempOnlinePorSucursal / tempEquiposTotalPorSucursal) * 100)).ToString () + "%";
+			}
 			else
 				temp.GetComponent<clienteButtonScript>().porcentaje.text = "N/A";
-
-
+			tempEquiposTotalPorSucursal = 0;
+			tempOnlinePorSucursal = 0;
 			ind++;
 
 		}
@@ -450,6 +469,14 @@ public  class Controller : MonoBehaviour
 		{
 			DestroyChild();
 			UpdateEquipos();
+		}
+	}
+
+	void OnApplicationFocus(bool focusStatus) 
+	{
+		if(focusStatus == true)
+		{
+			//UpdateInfo();
 		}
 	}
 
